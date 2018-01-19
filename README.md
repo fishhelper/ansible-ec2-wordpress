@@ -10,13 +10,13 @@ Host WordPress in your AWS Account. Create a VPC with [AWS CloudFormation](https
 
 ### <a href="desciption"></a> Description
 
-Creates a VPC to to host a Wordpress website. Launches t2.small instances. Installs the latest version of Wordpress with an Ansible playbook.
+Creates a VPC to to host a Wordpress website. Launches t2.small instances. Installs the latest version of Wordpress with an Ansible playbook. Assigns an Elastic IP to the Wordpress EC2 instance.
 
 ### <a href="directions"></a> Directions
 
 In the region 'us-east-1':
 
-<a href="https://console.aws.amazon.com/cloudformation/home?#/stacks/new?&templateURL=https://raw.githubusercontent.com/fishhelper/ansible-ec2-wordpress/master/wordpress-vpc-cloudformation.json" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"></a>
+<a href="https://console.aws.amazon.com/cloudformation/home?#/stacks/new" target="_blank"><img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"></a>
 
 1. Create a VPC with the CloudFormation template ```wordpress-vpc-cloudformation.json```
 1. ssh to the Ansible Host `ssh -i your_key.pem ec2-user@...`
