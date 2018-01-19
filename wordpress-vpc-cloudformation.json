@@ -279,7 +279,11 @@
     },
     "AnsibleInstance": {
       "Type": "AWS::EC2::Instance",
-      "DependsOn": "AttachGateway",
+      "DependsOn": [
+        "WordpressInstance",
+        "AttachGateway",
+        "IPAddress"
+      ],
       "Properties": {
         "ImageId": "ami-97785bed",
         "InstanceType": "t2.small",
@@ -335,7 +339,7 @@
                 "git clone https://github.com/fishhelper/ansible-ec2-wordpress.git /home/ec2-user/ansible-ec2-wordpress\n",
                 "echo 'localhost ansible_python_interpreter=\"/usr/bin/env python\"' >> /etc/ansible/hosts\n",
                 "echo '[wordpresshost]' >> /etc/ansible/hosts\n",
-                "echo $WORDPRESSHOST ansible_python_interpreter=\"/usr/bin/env python\" >> /etc/ansible/hosts\n"
+                "echo $WORDPRESSHOST >> /etc/ansible/hosts\n"
               ]
             ]
           }
@@ -387,7 +391,7 @@
     }
   },
   "Outputs": {
-    "URL": {
+    "WORDPRESSURL": {
       "Value": {
         "Fn::Join": [
           "",
@@ -396,15 +400,15 @@
             {
               "Fn::GetAtt": [
                 "WordpressInstance",
-                "PublicIp"
+                "PublicDnsName"
               ]
             }
           ]
         ]
       },
-      "Description": "Newly created application URL"
+      "Description": "Wordpress website URL"
     },
-    "ANSIBLEHOST": {
+    "ANSIBLE": {
       "Value": {
         "Fn::Join": [
           "",
@@ -419,7 +423,24 @@
           ]
         ]
       },
-      "Description": "Ansible Host"
+      "Description": "Ansible Host SSH"
+    },
+    "WORDPRESS": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "ubuntu@",
+            {
+              "Fn::GetAtt": [
+                "WordpressInstance",
+                "PublicIp"
+              ]
+            }
+          ]
+        ]
+      },
+      "Description": "Wordpress Host SSH"
     }
   }
 }
